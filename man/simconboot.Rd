@@ -7,7 +7,8 @@ Simultaneous Confidence Interval Estimation using Bootstrap
 \code{simconboot} obtains a simultaneous confidence interval for a function. It estimates the lower and upper endpoint functions of the interval by bootstrap.
 }
 \usage{
-simconboot(x,y,estimator,formula,B=200,alpha=0.05,sampsize=length(x),seed=8,colInt=c(5:39)/2,...)
+simconboot(x,y,estimator,formula,B=200,alpha=0.05,sampsize=length(x),
+           seed=8,colInt=c(5:39)/2,...)
 }
 \arguments{
   \item{x}{a numerical vector of x values}
@@ -52,10 +53,12 @@ attach(GrowthChart)
 
 nage <- 2 * pi * (age - min(age)) / (max(age) - min(age))
 nages <- unique(sort(nage))
-formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
+formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+
+            I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
 j <- simconboot(nage,height,lm,formula)
 plot(j, border=NA, col='darkgray',xlab = 'Age (years)',ylab = 'Height (cms)',xaxt = "n")
-axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 2*pi+1, by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
+axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 2*pi+1,
+        by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
 points(nage,height)
 lines(nages, j$cef, lty=2, col='green')
 

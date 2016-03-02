@@ -57,14 +57,15 @@ sformula <- height~splines_age
 sfunc <- approxfun(age,lm(sformula)$fitted.values)
 splreg <- sfunc(ages)
 rsplreg <- rearrangement(list(ages),splreg)
-plot(age,height,pch=21,bg='gray',cex=.5,xlab="Age (years)",ylab="Height (cms)",main="CEF (Regression Splines)",col='gray')
+plot(age,height,pch=21,bg='gray',cex=.5,xlab="Age (years)",ylab="Height (cms)",
+     main="CEF (Regression Splines)",col='gray')
 lines(ages,splreg,col='red',lwd=3)
 lines(ages,rsplreg,col='blue',lwd=2)
 legend("topleft",c('Original','Rearranged'),lty=1,col=c('red','blue'),bty='n')
 detach(GrowthChart)
 
 ##Bivariate example:
-library(quantreg)
+\dontrun{library(quantreg)
 data(GrowthChart)
 attach(GrowthChart)
 
@@ -72,22 +73,27 @@ ages <- unique(sort(age))
 taus <- c(1:999)/1000
 nage <- 2 * pi * (age - min(age)) / (max(age) - min(age))
 nages <- 2 * pi * (ages - min(ages)) / (max(ages) - min(ages))
-fform <- height ~ I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
+fform <- height ~ I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+
+          I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
 ffit <- rq(fform, tau = taus)
 fcoefs <- t(ffit$coef)
-freg <- rbind(1, sin(nages), cos(nages), sin(2*nages), cos(2*nages),sin(3*nages), cos(3*nages), sin(4*nages), cos(4*nages) )
+freg <- rbind(1, sin(nages), cos(nages), sin(2*nages), 
+              cos(2*nages),sin(3*nages), cos(3*nages), sin(4*nages), cos(4*nages) )
 fcqf <- crossprod(t(fcoefs),freg)
 rrfcqf <- rearrangement(list(taus,ages),fcqf, avg=TRUE)
 tdom <-c(1,10*c(1:99),999)
 adom <-c(1,5*c(1:floor(length(ages)/5)), length(ages))
 
 par(mfrow=c(2,1))
-persp(taus[tdom],ages[adom],rrfcqf[tdom,adom],xlab='quantile',ylab='age',zlab='height',col='lightgreen',theta=315,phi=25,shade=.5)
+persp(taus[tdom],ages[adom],rrfcqf[tdom,adom],xlab='quantile',
+      ylab='age',zlab='height',col='lightgreen',theta=315,phi=25,shade=.5)
 title("CQP: Average Quantile/Age Rearrangement")
-contour(taus,ages,rrfcqf,xlab='quantile',ylab='age',col='green',levels=10*c(ceiling(min(fcqf)/10):floor(max(fcqf)/10)))
+contour(taus,ages,rrfcqf,xlab='quantile',ylab='age',col='green',
+        levels=10*c(ceiling(min(fcqf)/10):floor(max(fcqf)/10)))
 title("CQP: Contour (RR-Quantile/Age)")
 
 detach(GrowthChart)
+}
 }
 \keyword{optimize}
 \keyword{manip}

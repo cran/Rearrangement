@@ -29,17 +29,22 @@ Wesley Graybill, Mingli Chen, Victor Chernozhukov, Ivan Fernandez-Val, Alfred Ga
 \code{\link[graphics]{polygon}}
 }
 \examples{
-data(GrowthChart)
+
+\dontrun{data(GrowthChart)
 attach(GrowthChart)
 
 nage <- 2 * pi * (age - min(age)) / (max(age) - min(age))
-formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
+formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+
+            I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
 j<-simconboot(nage,height,lm,formula)
-plot(nage,height,pch=21,bg='gray',cex=0.5,xlab="Age (years)",ylab="Height (cms)",col='gray',xaxt='n')
-axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 2*pi+1,by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
+plot(nage,height,pch=21,bg='gray',cex=0.5,xlab="Age (years)",
+     ylab="Height (cms)",col='gray',xaxt='n')
+axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 
+        2*pi+1,by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
 polygon.conint(j, border=NA, col='darkgray')
 
-detach(GrowthChart)
+detach(GrowthChart)}
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

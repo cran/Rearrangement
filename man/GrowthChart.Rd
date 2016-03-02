@@ -22,7 +22,8 @@ This data set contains age and height of US-born white males age two through twe
 \examples{
 data(GrowthChart)
 attach(GrowthChart)
-plot(age,height,pch=21,bg='gray',cex=.5,xlab="Age (years)",ylab="Height (cms)",col='gray')
+plot(age,height,pch=21,bg='gray',cex=.5,
+xlab="Age (years)",ylab="Height (cms)",col='gray')
 detach(GrowthChart)
 }
 

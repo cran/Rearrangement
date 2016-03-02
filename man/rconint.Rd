@@ -40,22 +40,27 @@ Wesley Graybill, Mingli Chen, Victor Chernozhukov, Ivan Fernandez-Val, Alfred Ga
 \code{\link{simconboot}}, \code{\link{rearrangement}}
 }
 \examples{
+\dontrun{
 data(GrowthChart)
 attach(GrowthChart)
 
 nage <- 2 * pi * (age - min(age)) / (max(age) - min(age))
-formula <- height ~ I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
+formula <- height ~ I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+
+            I(sin(3*nage))+I(cos(3*nage))+I(sin(4*nage))+I(cos(4*nage))
 j <- simconboot(nage,height,lm,formula)
 k <- rconint(j)
 plot(k, border=NA, col='darkgray',xlab = 'Age (years)',ylab = 'Height (cms)',xaxt = "n")
-axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 2*pi+1,by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
+axis(1, at = seq(-2*pi*min(age)/(max(age)-min(age)), 
+        2*pi+1,by=5*2*pi/(max(age)-min(age))), label = seq(0, max(age)+1, by=5))
 polygon.conint(j, border=NA, col='lightgray')
 polygon.conint(k, border=NA, col='darkgray', density=50)
 points(nage,height,col='gray80')
-legend(min(nage),max(height),c("95\% CI Original","95\% CI  Rearranged"),lty=c(1,1),lwd=c(2,2),col=c("lightgray","darkgray"),bty="n");
+legend(min(nage),max(height),c("95\% CI Original",
+       "95\% CI  Rearranged"),lty=c(1,1),lwd=c(2,2),
+       col=c("lightgray","darkgray"),bty="n");
 detach(GrowthChart)
 }
-
+}
 \keyword{ optimize }
 \keyword{manip}
 \keyword{regression}

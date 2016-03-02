@@ -53,18 +53,24 @@ sformula <- height~splines_age
 sfunc <- approxfun(age,lm(sformula)$fitted.values)
 splreg <- sfunc(ages)
 rsplreg <- rearrangement(list(ages),splreg)
-plot(age,height,pch=21,bg='gray',cex=.5,xlab="Age(years)",ylab="Height(cms)", main="CEF (Regression Splines)",col='gray')
+plot(age,height,pch=21,bg='gray',cex=.5,xlab="Age(years)",
+ylab="Height(cms)", main="CEF (Regression Splines)",col='gray')
 lines(ages,splreg,col='red',lwd=3)
 lines(ages,rsplreg,col='blue',lwd=2)
 legend("topleft",c('Original','Rearranged'),lty=1,col=c('red','blue'),bty='n')
 detach(GrowthChart)
 
 ##rconint example:
+\dontrun{
 data(GrowthChart)
 attach(GrowthChart)
 
 nage <- 2 * pi * (age - min(age)) / (max(age) - min(age))
-formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage))+I(cos(2*nage))+I(sin(3*nage))+I(cos(3*nage))+ I(sin(4*nage)) + I(cos(4*nage))
+
+formula <- height~I(sin(nage))+I(cos(nage))+I(sin(2*nage)) +
+            I(cos(2*nage))+I(sin(3*nage))+
+            I(cos(3*nage))+ I(sin(4*nage)) + I(cos(4*nage))
+			
 j <- simconboot(nage,height,lm,formula)
 k <- rconint(j)
 plot(k, border=NA, col='darkgray')
@@ -72,4 +78,5 @@ polygon.conint(j, border=NA, col='lightgray')
 polygon.conint(k, border=NA, col='darkgray', density=50)
 points(nage,height)
 detach(GrowthChart)
+}
 }
